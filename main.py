@@ -28,13 +28,16 @@ class Player:
 
     def __init__(self):
 
-        self.rect = pygame.Rect(self.PLAYER_X, self.PLAYER_Y, 50, 50)
-        self.player_surface = pygame.Surface((50,50))
-        self.player_surface.fill((255,255,255))
-        self.player_life = 3
+        self.image = pygame.image.load('img/ship3.png')
+        self.image = pygame.transform.scale(self.image,(60,75))
+        self.rect = self.image.get_rect(topleft=(30, 350))
+        #self.rect = pygame.Rect(self.PLAYER_X, self.PLAYER_Y, 50, 50)
+        #self.player_surface = pygame.Surface((50,50))
+        #self.player_surface.fill((255,255,255))
+        #self.player_life = 3        
                  
     def draw(self, SCREEN):
-        SCREEN.blit(self.player_surface, (self.rect.x, self.rect.y))     
+        SCREEN.blit(self.image, (self.rect.x, self.rect.y))     
 
 
 class Enemy:
@@ -43,20 +46,24 @@ class Enemy:
 
     def __init__(self):
 
-        self.rect = pygame.Rect(self.ENEMY_X, randint(160,550), 50, 50)
-        self.enemy_surface = pygame.Surface((50,50))
-        self.enemy_surface.fill((255,0,0))
+        images = [pygame.image.load('img/ship4.png') ,pygame.image.load('img/ship2.png')]
+        self.image = images[0]
+        self.image = pygame.transform.scale(self.image,(60,75))
+        self.rect = self.image.get_rect(topleft=(SCREEN_WIDTH, randint(160, 550)))
+        #self.rect = pygame.Rect(self.ENEMY_X, randint(160,550), 50, 50)
+        #self.enemy_surface = pygame.Surface((50,50))
+        #self.enemy_surface.fill((255,0,0))
                  
     def draw(self, SCREEN):
-        SCREEN.blit(self.enemy_surface, (self.rect.x, self.rect.y))
+        SCREEN.blit(self.image, (self.rect.x, self.rect.y))
 
 
 class Bullet:
 
     def __init__(self, shooter_x, shooter_y):
 
-        self.rect = pygame.Rect(shooter_x, shooter_y+20, 10, 10)
-        self.bullet_surface = pygame.Surface((10,10))
+        self.rect = pygame.Rect(shooter_x, shooter_y+37, 5, 5)
+        self.bullet_surface = pygame.Surface((5,5))
         self.bullet_surface.fill((255,255,0))
     
     def draw(self, SCREEN):
@@ -359,7 +366,7 @@ class Game:
                 player.rect.y -= 10
             
         if keys[pygame.K_DOWN] or keys[pygame.K_s]:
-            if player.rect.y <= SCREEN_HEIGHT - player.rect.width - 10:
+            if player.rect.y <= SCREEN_HEIGHT - player.rect.height - 10:
                 player.rect.y += 10
         
         if keys[pygame.K_LEFT] or keys[pygame.K_a]:
